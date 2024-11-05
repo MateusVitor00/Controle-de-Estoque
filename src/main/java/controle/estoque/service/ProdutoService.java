@@ -1,6 +1,7 @@
 package controle.estoque.service;
 
 import controle.estoque.controllers.CriarProdutoDto;
+import controle.estoque.controllers.UpdateProdutoDto;
 import controle.estoque.entity.Produto;
 import controle.estoque.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
@@ -29,13 +30,38 @@ public class ProdutoService {
         return produtoSalvo.getCodigo();
     }
 
-    //Busca de produtor pelo ID
+    //BUSCA PELO PRODUTO NO ID
     public Optional<Produto> getProdutoById(String codigo){
         return produtoRepository.findById(UUID.fromString(codigo));
     }
 
+    //LISTA TODOS OS PRODUTOS
     public List<Produto> listProdutos(){
         return produtoRepository.findAll();
+    }
+
+    //ATUALIZA PRODUTO PELO ID
+    public void updateProdutoById(String codigo, UpdateProdutoDto updateProdutoDto){
+        var id = UUID.fromString(codigo);
+
+        var produtoEntity = produtoRepository.findById(id);
+
+        if(produtoEntity.isPresent()){
+            var produto = produtoEntity.get();
+
+            if(updateProdutoDto.nome() != null){
+                produto.setNome(updateProdutoDto.nome());
+            }
+            if(updateProdutoDto.descricao() != null){
+                produto.setDescricao(updateProdutoDto.descricao());
+            }
+            if(updateProdutoDto.preco() != 0){
+                produto.setPreco(updateProdutoDto.preco());
+            }
+
+            produtoRepository.save(produto);
+        }
+
     }
 
     //Deleta o produto pelo ID

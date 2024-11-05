@@ -45,6 +45,15 @@ public class ProdutoController {
        return ResponseEntity.ok(lista);
     }
 
+    //METODO PUT
+    //EDITA UM PRODUTO
+    @PutMapping("/{codigo}")
+    public ResponseEntity<Void> updateUserById(@PathVariable("codigo")String codigo, @RequestBody UpdateProdutoDto updateProdutoDto){
+
+        produtoService.updateProdutoById(codigo, updateProdutoDto);
+        return ResponseEntity.noContent().build();
+    }
+
     //METODO DELETE
     //DELETA O PRODUTO PELO ID
     @DeleteMapping("/{codigo}")
