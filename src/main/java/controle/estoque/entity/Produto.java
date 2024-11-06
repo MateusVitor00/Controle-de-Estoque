@@ -12,6 +12,10 @@ public class Produto {
     @Column(name = "CODIGO_DO_PRODUTO")
     private UUID codigo;
 
+    @ManyToOne
+    @JoinColumn(name = "estoque_id")
+    private Estoque estoque;
+
     @Column(name = "Nome")
     private String nome;
 
@@ -43,4 +47,6 @@ public class Produto {
     public String getDescricao() {return descricao;}
     public void setDescricao(String descricao) {this.descricao = descricao;}
 
+    public Estoque getEstoque() {return estoque;}
+    public void setEstoque(Estoque estoque) {this.estoque = estoque;}
 }
